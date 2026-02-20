@@ -46,7 +46,7 @@ Before running LegacyLift locally, ensure you have the following installed:
 ```bash
 git clone https://github.com/karunanayak-tech/Legacy_Lift.git   
 cd Legacy_Lift
-
+```
 ### 2️⃣ Configure Your Environment Variables
 
 Create a `.env` file in the root directory and securely add your Gemini API key:
@@ -57,7 +57,7 @@ GEMINI_API_KEY=your_api_key_here
 
 # If using Option B (Virtual Environment), use:
 GOOGLE_API_KEY=your_api_key_here
-
+```
 
 ## 🛠️ Choose Your Setup Method
 
@@ -70,7 +70,7 @@ Spin up the application using **Docker Compose**:
 
 ```bash
 docker compose up --build -d
-
+```
 #### 2️⃣ Access the UI
 
 The Streamlit interface will instantly be available at:
@@ -83,7 +83,7 @@ When you are done testing, gracefully spin down the container:
 
 ```bash
 docker compose down
-
+```
 ### 🧪 Option B: Local Virtual Environment
 
 Use this method to manage dependencies locally and avoid path conflicts.
@@ -99,17 +99,17 @@ python -m venv venv
 
 # Activate it (macOS/Linux)
 source venv/bin/activate
-
+```
 #### 2️⃣ Install Dependencies
 
 ```bash
 pip install -r requirements.txt
-
+```
 #### 3️⃣ Launch the Application
 
 ```bash
 streamlit run app.py
-
+```
 ---
 
 ## 📖 Usage: Migrating an Application
