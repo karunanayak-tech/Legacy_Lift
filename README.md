@@ -42,7 +42,109 @@ Before running LegacyLift locally, ensure you have the following installed:
 
 ## 🚀 Installation & Setup
 
-**1. Clone the repository**
+### 1️⃣ Clone the Repository
 ```bash
-git clone [https://github.com/karunanayak-tech/Legacy_Lift.git](https://github.com/karunanayak-tech/Legacy_Lift.git)
+git clone https://github.com/karunanayak-tech/Legacy_Lift.git   
 cd Legacy_Lift
+
+### 2️⃣ Configure Your Environment Variables
+
+Create a `.env` file in the root directory and securely add your Gemini API key:
+
+```env
+# If using Option A (Docker), use:
+GEMINI_API_KEY=your_api_key_here
+
+# If using Option B (Virtual Environment), use:
+GOOGLE_API_KEY=your_api_key_here
+
+
+## 🛠️ Choose Your Setup Method
+
+### 🐳 Option A: Docker (Recommended)
+
+LegacyLift is fully containerized for a seamless developer experience.  
+Spin up the application using **Docker Compose**:
+
+#### 1️⃣ Start the Agentic Factory
+
+```bash
+docker compose up --build -d
+
+#### 2️⃣ Access the UI
+
+The Streamlit interface will instantly be available at:
+
+👉 [http://localhost:8501]
+
+#### 3️⃣ Shut Down
+
+When you are done testing, gracefully spin down the container:
+
+```bash
+docker compose down
+
+### 🧪 Option B: Local Virtual Environment
+
+Use this method to manage dependencies locally and avoid path conflicts.
+
+#### 1️⃣ Set Up a Virtual Environment
+
+```bash
+# Create the environment
+python -m venv venv
+
+# Activate it (Windows)
+.\venv\Scripts\activate
+
+# Activate it (macOS/Linux)
+source venv/bin/activate
+
+#### 2️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+
+#### 3️⃣ Launch the Application
+
+```bash
+streamlit run app.py
+
+---
+
+## 📖 Usage: Migrating an Application
+
+Once the application is running via either method:
+
+### 🔹 Input
+
+Paste a **public GitHub repository URL** of a legacy application  
+(e.g., a Flask or Node.js app) into the UI.
+
+### 🔹 Migrate
+
+Click the **Migrate** button.
+
+### 🔹 Process
+
+LegacyLift:
+- Clones the repository  
+- Identifies the framework  
+- Utilizes **Gemini 1.5 Flash** to analyze the code  
+
+### 🔹 Output
+
+In under **10 seconds**, the agent generates three critical cloud-native artifacts:
+
+### 📦 Generated Cloud-Native Artifacts
+
+- 📄 **Dockerfile**  
+  Production-grade, secure, and multi-stage.
+
+- ⚙️ **cloudbuild.yaml**  
+  Configuration for automated Google Cloud Builds.
+
+- ☁️ **service.yaml**  
+  Manifest for serverless deployment on Google Cloud Run.
+
+
