@@ -1,0 +1,15 @@
+# --- Ignore Local Environment ---
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# --- Ignore Temporary Data ---
+temp_legacy_app/
+
+# --- Ignore Secrets ---
+.env
+
+# --- Ignore Git Metadata ---
+.git/
+.gitignore

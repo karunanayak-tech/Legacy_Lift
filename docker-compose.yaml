@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  legacylift-app:
+    build: .             # Builds the Dockerfile in this folder
+    ports:
+      - "8501:8501"      # Maps the ports automatically
+    env_file:
+      - .env             # Injects your API key automatically
+    volumes:
+      - .:/app           # OPTIONAL: Lets you edit code live without rebuilding!

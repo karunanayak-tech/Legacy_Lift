@@ -1,0 +1,15 @@
+# --- Security (CRITICAL) ---
+.env
+
+# --- Python Environment (Heavy) ---
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# --- Temporary App Data (Ghost) ---
+temp_legacy_app/
+
+# --- OS Junk Files ---
+.DS_Store
+Thumbs.db
