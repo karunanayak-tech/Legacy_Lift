@@ -1,8 +1,7 @@
 <div align="center">
-  <img src="https://img.icons8.com/color/144/null/clouds.png" alt="LegacyLift Logo">
   <h1>🚀 LegacyLift</h1>
   <p><b>Intelligent, Zero-Persistence Cloud Application Modernization</b></p>
-  <p><i>Lift outdated monolithic codebases into sleek, production-ready Google Kubernetes Engine (GKE) topologies in seconds using Google Generative AI.</i></p>
+  <p><i>Lift outdated monolithic codebases into sleek, production-ready Google Kubernetes Engine (GKE) topologies using Google Generative AI.</i></p>
 </div>
 
 ---
@@ -11,7 +10,7 @@
 
 **LegacyLift** is a cutting-edge, AI-driven DevOps utility designed for platform engineers and developers aggressively modernizing legacy applications. 
 
-Instead of manually analyzing outdated `requirements.txt` or `package.json` files and hand-writing Dockerfiles or Kubernetes manifests, **LegacyLift automates the entire infrastructure-as-code (IaC) extraction process.**
+Instead of manually analyzing outdated `requirements.txt` or `package.json` files and hand-writing Dockerfiles or Kubernetes manifests.
 
 By simply inputting a GitHub repository URL or securely uploading an air-gapped `.zip` archive, LegacyLift analyzes your application's architecture and generates optimized, GKE-ready Dockerfiles, Deployments, Services, Ingress routes, and Horizontal Pod Autoscalers (HPAs) instantly.
 
@@ -22,12 +21,12 @@ By simply inputting a GitHub repository URL or securely uploading an air-gapped 
 
 ---
 
-## 🔒 Security Architecture (Enterprise Grade)
+## 🔒 Security Architecture 
 
 LegacyLift is engineered for strict enterprise compliance environments where source code leakage is unacceptable.
 
 ### 1. Zero-Persistence File System (TmpFS)
-Under the hood, LegacyLift NEVER saves cloned repositories or uploaded artifacts to a persistent disk. All user requests instantiate a unique Python `tempfile.TemporaryDirectory` context mapped directly to the host's RAM (`/tmp`). The millisecond the LLM finishes context extraction, the directory is obliterated from memory. Even in the event of an Out-Of-Memory (OOM) pod crash, the data vanishes permanently.
+Under the hood, LegacyLift NEVER saves cloned repositories or uploaded artifacts to a persistent disk. All user requests instantiate a unique Python `tempfile`.TemporaryDirectory context mapped directly to the host's RAM (`/tmp`). In milliseconds the LLM finishes context extraction, the directory is obliterated from memory. Even in the event of an Out-Of-Memory (OOM) pod crash, the data vanishes permanently.
 
 ### 2. Secure Redaction Layer (SRL)
 Before any source code or dependency file context is transmitted to the Gemini API, it passes through the **Secure Redaction Layer**. High-entropy RegEx engines physically overwrite sensitive strings in-memory.
@@ -46,7 +45,7 @@ Uploaded `.zip` and `.tar.gz` payloads are actively scanned for Zip Bombs (limit
 * **Intelligent File Context**: Automatically parses Python (`requirements.txt`) and Node.js (`package.json`) architectures.
 * **Interactive Artifact Editor**: An embedded UI editor allowing you to tweak the generated `Dockerfile` and `deployment.yaml` files before downloading them.
 * **GKE Shell Script Generation**: Automatically drafts the exact bash commands to build, tag, push to GCR, and `kubectl apply` your configurations into Google Cloud.
-* **Aesthetic Theming**: A beautiful, fluid Streamlit UI featuring dynamic Morning 🌤️ / Night 🚀✨ mode toggling and floating micro-animations.
+
 
 ---
 
@@ -63,7 +62,7 @@ Uploaded `.zip` and `.tar.gz` payloads are actively scanned for Zip Bombs (limit
 To get a local copy of LegacyLift up and running smoothly, follow these steps.
 
 ### Prerequisites
-* Docker & Docker Compose installed on your machine.
+* Docker desktop installed on your machine.
 * A valid Google AI Studio API Key.
 
 ### Installation & Run
@@ -97,7 +96,7 @@ To get a local copy of LegacyLift up and running smoothly, follow these steps.
 ## 💡 Usage Guide
 
 1. **Select Ingestion Method**: Choose between pasting a GitHub URL or uploading a compressed archive.
-2. **Add Atmospheric Components**: (Optional) Use the multi-select dropdown to ask Gemini for advanced GKE manifests like `ingress.yaml` or `hpa.yaml`.
+2. **Add Additional Components**: (Optional) Use the multi-select dropdown to ask Gemini for advanced GKE manifests like `ingress.yaml` or `hpa.yaml`.
 3. **Lift Application**: Click the "Lift" button. Watch the console to see the real-time extraction, Redaction Layer sweeps, and Generation progress.
 4. **Review & Edit**: Click through the tabs of generated artifacts (Dockerfiles, YAMLs). Review the code, edit inline if needed, and download the exact configurations required for your new cluster!
 5. **Start Over**: Click the "Start New Deployment" button at the bottom of the page to purge the session state and lift a new app.
