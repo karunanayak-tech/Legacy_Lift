@@ -1,150 +1,108 @@
-# 🚀 LegacyLift: Agentic Migration Factory
-
-![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
-![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?logo=streamlit&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?logo=google-cloud&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
-
-**LegacyLift** is an AI-powered DevOps tool built to eliminates infrastructure toil by automatically modernizing legacy applications into production-ready Google Cloud Run and Kubernetes deployments. 
-
-By passing a public GitHub repository, LegacyLift acts as an autonomous SRE, analyzing the codebase and utilizing Google Gemini to instantly generate optimized containerization and CI/CD artifacts.
+<div align="center">
+  <img src="https://img.icons8.com/color/144/null/clouds.png" alt="LegacyLift Logo">
+  <h1>🚀 LegacyLift</h1>
+  <p><b>Intelligent, Zero-Persistence Cloud Application Modernization</b></p>
+  <p><i>Lift outdated monolithic codebases into sleek, production-ready Google Kubernetes Engine (GKE) topologies in seconds using Google Generative AI.</i></p>
+</div>
 
 ---
 
-## ✨ Features
+## 📖 About The Project
 
-* **🧠 AI Context Extraction:** Automatically scans `package.json` or `requirements.txt` to determine the technology stack.
-* **🐳 Smart Containerization:** Generates highly optimized, lightweight `Dockerfile`s (e.g., Alpine/Slim images) with correct exposed ports.
-* **⚙️ CI/CD Automation:** Outputs strict, ready-to-execute `cloudbuild.yaml` pipelines for Google Cloud Build.
-* **☸️ Flexible Orchestration:** Dynamically generates `service.yaml` manifests for either serverless **Knative (Cloud Run)** or traditional **Kubernetes** deployments (Deployment + LoadBalancer).
-* **🛡️ SRE-Focused:** Strict prompt engineering ensures outputs are raw, machine-readable configurations free of conversational LLM filler.
+**LegacyLift** is a cutting-edge, AI-driven DevOps utility designed for platform engineers and developers aggressively modernizing legacy applications. 
 
----
+Instead of manually analyzing outdated `requirements.txt` or `package.json` files and hand-writing Dockerfiles or Kubernetes manifests, **LegacyLift automates the entire infrastructure-as-code (IaC) extraction process.**
 
-## 🏗️ Architecture Flow
+By simply inputting a GitHub repository URL or securely uploading an air-gapped `.zip` archive, LegacyLift analyzes your application's architecture and generates optimized, GKE-ready Dockerfiles, Deployments, Services, Ingress routes, and Horizontal Pod Autoscalers (HPAs) instantly.
 
-1. **Ingestion:** Streamlit frontend captures the target legacy GitHub URL and temporarily clones it.
-2. **Analysis:** Python backend extracts dependency manifests to map the build context.
-3. **Generation:** Gemini strictly generates Infrastructure-as-Code (IaC) based on Google Cloud best practices.
-4. **Validation:** Developers can locally test the generated artifacts using `docker build` before pushing to GCP.
+### Why LegacyLift?
+- **Speed**: Go from a raw Python/Node.js web application to a fully containerized K8s cluster configuration in literally one click.
+- **Accuracy**: Driven by the raw context capability of `gemini-2.5-flash`, the engine understands both the application code and the specific architectural needs of Google Cloud.
+- **Security**: Built under strict "Zero-Trust" and "Zero-Persistence" design principles, no source code, tokens, or credentials ever hit a physical disk or an external API unredacted.
 
 ---
 
-## 📋 Prerequisites
+## 🔒 Security Architecture (Enterprise Grade)
 
-Before running LegacyLift locally, ensure you have the following installed:
-* Python 3.9+
-* Docker Desktop
-* Git
-* A valid Google Gemini API Key
+LegacyLift is engineered for strict enterprise compliance environments where source code leakage is unacceptable.
+
+### 1. Zero-Persistence File System (TmpFS)
+Under the hood, LegacyLift NEVER saves cloned repositories or uploaded artifacts to a persistent disk. All user requests instantiate a unique Python `tempfile.TemporaryDirectory` context mapped directly to the host's RAM (`/tmp`). The millisecond the LLM finishes context extraction, the directory is obliterated from memory. Even in the event of an Out-Of-Memory (OOM) pod crash, the data vanishes permanently.
+
+### 2. Secure Redaction Layer (SRL)
+Before any source code or dependency file context is transmitted to the Gemini API, it passes through the **Secure Redaction Layer**. High-entropy RegEx engines physically overwrite sensitive strings in-memory.
+* Gemini sees: `db_uri = "<REDACTED_DB_URI>"`
+* Gemini **never** sees: `db_uri = "postgresql://prod:secret@10.0.0.1"`
+* *Supported Redactions: JWTs, AWS Keys, IPv4 Internals, DB Connectors, Generic Passwords.*
+
+### 3. Archive Sanitization
+Uploaded `.zip` and `.tar.gz` payloads are actively scanned for Zip Bombs (limiting extraction ratios) and Path Traversal attacks (verifying root structures) before admission to the `/tmp` workspace.
 
 ---
 
-## 🚀 Installation & Setup
+## ✨ Core Features
 
-### 1️⃣ Clone the Repository
-```bash
-git clone https://github.com/karunanayak-tech/Legacy_Lift.git   
-cd Legacy_Lift
-```
-### 2️⃣ Configure Your Environment Variables
+* **Multi-Ingestion Routing**: Input public/private GitHub repository URLs (using PAT scopes) or upload air-gapped archives manually.
+* **Intelligent File Context**: Automatically parses Python (`requirements.txt`) and Node.js (`package.json`) architectures.
+* **Interactive Artifact Editor**: An embedded UI editor allowing you to tweak the generated `Dockerfile` and `deployment.yaml` files before downloading them.
+* **GKE Shell Script Generation**: Automatically drafts the exact bash commands to build, tag, push to GCR, and `kubectl apply` your configurations into Google Cloud.
+* **Aesthetic Theming**: A beautiful, fluid Streamlit UI featuring dynamic Morning 🌤️ / Night 🚀✨ mode toggling and floating micro-animations.
 
-Create a `.env` file in the root directory and securely add your Gemini API key:
-
-```env
-# If using Option A (Docker), use:
-GEMINI_API_KEY=your_api_key_here
-
-# If using Option B (Virtual Environment), use:
-GOOGLE_API_KEY=your_api_key_here
-```
-
-## 🛠️ Choose Your Setup Method
-
-### 🐳 Option A: Docker (Recommended)
-
-LegacyLift is fully containerized for a seamless developer experience.  
-Spin up the application using **Docker Compose**:
-
-#### 1️⃣ Start the Agentic Factory
-
-```bash
-docker compose up --build -d
-```
-#### 2️⃣ Access the UI
-
-The Streamlit interface will instantly be available at:
-
-👉 [http://localhost:8501]
-
-#### 3️⃣ Shut Down
-
-When you are done testing, gracefully spin down the container:
-
-```bash
-docker compose down
-```
-### 🧪 Option B: Local Virtual Environment
-
-Use this method to manage dependencies locally and avoid path conflicts.
-
-#### 1️⃣ Set Up a Virtual Environment
-
-```bash
-# Create the environment
-python -m venv venv
-
-# Activate it (Windows)
-.\venv\Scripts\activate
-
-# Activate it (macOS/Linux)
-source venv/bin/activate
-```
-#### 2️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-#### 3️⃣ Launch the Application
-
-```bash
-streamlit run app.py
-```
 ---
 
-## 📖 Usage: Migrating an Application
+## 🛠️ Tech Stack
+* **Frontend/Backend Web Framework**: [Streamlit](https://streamlit.io/) (Python)
+* **Intelligence Engine**: Google Generative AI (`gemini-2.5-flash`)
+* **Source Control Integration**: GitPython
+* **Containerization**: Docker Compose
 
-Once the application is running via either method:
+---
 
-### 🔹 Input
+## 🚀 Getting Started (Local Deployment)
 
-Paste a **public GitHub repository URL** of a legacy application  
-(e.g., a Flask or Node.js app) into the UI.
+To get a local copy of LegacyLift up and running smoothly, follow these steps.
 
-### 🔹 Migrate
+### Prerequisites
+* Docker & Docker Compose installed on your machine.
+* A valid Google AI Studio API Key.
 
-Click the **Migrate** button.
+### Installation & Run
 
-### 🔹 Process
+1. **Clone the repo**
+   ```sh
+   git clone https://github.com/your-username/LegacyLift.git
+   cd LegacyLift
+   ```
 
-LegacyLift:
-- Clones the repository  
-- Identifies the framework  
-- Utilizes **Gemini 1.5 Flash** to analyze the code  
+2. **Configure your Environment Variables**
+   Create a `.env` file in the root directory and add your key:
+   ```env
+   GOOGLE_API_KEY="your-gemini-api-key-here"
+   ```
 
-### 🔹 Output
+3. **Deploy using Docker Compose**
+   LegacyLift utilizes Docker Compose for hot-reloading and port mapping out-of-the-box.
+   ```sh
+   docker compose up --build
+   ```
 
-In under **10 seconds**, the agent generates three critical cloud-native artifacts:
+4. **Access the Application**
+   Open your browser and navigate to:
+   ```text
+   http://localhost:8501
+   ```
 
-### 📦 Generated Cloud-Native Artifacts
+---
 
-- 📄 **Dockerfile**  
-  Production-grade, secure, and multi-stage.
+## 💡 Usage Guide
 
-- ⚙️ **cloudbuild.yaml**  
-  Configuration for automated Google Cloud Builds.
+1. **Select Ingestion Method**: Choose between pasting a GitHub URL or uploading a compressed archive.
+2. **Add Atmospheric Components**: (Optional) Use the multi-select dropdown to ask Gemini for advanced GKE manifests like `ingress.yaml` or `hpa.yaml`.
+3. **Lift Application**: Click the "Lift" button. Watch the console to see the real-time extraction, Redaction Layer sweeps, and Generation progress.
+4. **Review & Edit**: Click through the tabs of generated artifacts (Dockerfiles, YAMLs). Review the code, edit inline if needed, and download the exact configurations required for your new cluster!
+5. **Start Over**: Click the "Start New Deployment" button at the bottom of the page to purge the session state and lift a new app.
 
-- ☁️ **service.yaml**  
-  Manifest for serverless deployment on Google Cloud Run.
+---
 
-
+## 📜 License
+Distributed under the MIT License. See `LICENSE` for more information.
