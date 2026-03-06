@@ -8,11 +8,11 @@
 
 ## 📖 About The Project
 
-**LegacyLift** is a cutting-edge, AI-driven DevOps utility designed for platform engineers and developers aggressively modernizing legacy applications. 
+**LegacyLift** is an AI-assisted DevOps tool designed to automate the initial containerization and Kubernetes orchestration of legacy applications. 
 
 Instead of manually analyzing outdated `requirements.txt` or `package.json` files and hand-writing Dockerfiles or Kubernetes manifests.
 
-By simply inputting a GitHub repository URL or securely uploading an air-gapped `.zip` archive, LegacyLift analyzes your application's architecture and generates optimized, GKE-ready Dockerfiles, Deployments, Services, Ingress routes, and Horizontal Pod Autoscalers (HPAs) instantly.
+You can simply input a GitHub repository URL or securely uploading an air-gapped `.zip` archive, LegacyLift analyzes your application's architecture and generates optimized, GKE-ready Dockerfiles, Deployments, Services, Ingress routes, and Horizontal Pod Autoscalers (HPAs) instantly.
 
 ### Why LegacyLift?
 - **Speed**: Go from a raw Python/Node.js web application to a fully containerized K8s cluster configuration in literally one click.
